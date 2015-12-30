@@ -18,7 +18,8 @@
     <None Include="README.md" />
     <None Include="NativeTool.java" />
     <None Include="jni\BaxUtil.java" />
-    <None Include="jni\UserJava.java" />
+    <None Include="jni\Book.java" />
+    <None Include="jni\User.java" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="jni\cn_dcs_leef_jni_NativeTool.cpp">
@@ -29,9 +30,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="jni\cn_dcs_leef_jni_NativeTool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="jni\jni.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -39,6 +37,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="jni\JniUtil.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\cn_dcs_leef_jni_NativeTool.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -54,79 +54,101 @@ void pCharToJstring(jstring &jstr, char *pIn, int iLenOfIn, JNIEnv *env){
 
 //Object Basic Next
 
-void getLongValue(jlong* val, JNIEnv *env, jclass cls, jobject obj,
-		const char* fieldName) {
+void getDoubleValue(double &val, JNIEnv *env, jclass cls, jobject obj, const char *fieldName){
+	jfieldID id = env->GetFieldID(cls, fieldName, "D");
+	val = env->GetLongField(obj, id);
+}
+
+void setDoubleValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
+		double val) {
+	jfieldID id = env->GetFieldID(cls, fieldName, "D");
+	env->SetLongField(obj, id, val);
+}
+
+void getFloatValue(float &val, JNIEnv *env, jclass cls, jobject obj, const char *fieldName){
+	jfieldID id = env->GetFieldID(cls, fieldName, "F");
+	val = env->GetLongField(obj, id);
+}
+
+void setFloatValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
+		float val) {
+	jfieldID id = env->GetFieldID(cls, fieldName, "F");
+	env->SetLongField(obj, id, val);
+}
+
+void getLongValue(long long &val, JNIEnv *env, jclass cls, jobject obj,
+		const char *fieldName) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "J");
-	*val = env->GetLongField(obj, id);
+	val = env->GetLongField(obj, id);
 }
 
 void setLongValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
-		unsigned long long val) {
+		long long val) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "J");
 	env->SetLongField(obj, id, val);
 }
 
-void getIntValue(unsigned int* val, JNIEnv *env, jclass cls, jobject obj,
+void getIntValue(long &val, JNIEnv *env, jclass cls, jobject obj,
 		const char* fieldName) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "I");
-	*val = env->GetIntField(obj, id);
+	val = env->GetIntField(obj, id);
 }
 
 void setIntValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
-		unsigned int val) {
+		long val) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "I");
 	env->SetIntField(obj, id, val);
 }
 
-void getShortValue(unsigned short* val, JNIEnv *env, jclass cls, jobject obj,
+void getShortValue(short &val, JNIEnv *env, jclass cls, jobject obj,
 		const char* fieldName)
 {
 	jfieldID id=env->GetFieldID(cls,fieldName,"S");
-	*val=env->GetShortField(obj,id);
+	val = env->GetShortField(obj,id);
 }
 
 void setShortValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
-		unsigned short val) {
+		short val) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "S");
 	env->SetShortField(obj, id, val);
 }
 
 
-void getByteValue(unsigned char* val, JNIEnv *env, jclass cls, jobject obj,
+void getCharValue(unsigned short &val, JNIEnv *env, jclass cls, jobject obj,
+		const char* fieldName)
+{
+	jfieldID id=env->GetFieldID(cls,fieldName,"C");
+	val = env->GetShortField(obj,id);
+}
+
+void setCharValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
+		unsigned short val) {
+	jfieldID id = env->GetFieldID(cls, fieldName, "C");
+	env->SetShortField(obj, id, val);
+}
+
+
+void getByteValue(char *val, JNIEnv *env, jclass cls, jobject obj,
 		const char* fieldName) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "B");
 	*val = env->GetByteField(obj, id);
 }
 
-void setByteValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
-		unsigned char val) {
+void setByteValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, char val) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "B");
 	env->SetByteField(obj, id, val);
 }
 
-void getBoolValue(bool* val, JNIEnv* env, jclass cls, jobject obj,const char* fieldName)
+void getBoolValue(bool *val, JNIEnv *env, jclass cls, jobject obj,const char *fieldName)
 {
 	jfieldID id = env->GetFieldID(cls, fieldName, "Z");
 	*val = env->GetBooleanField(obj, id);
 }
 
-void setBoolValue(JNIEnv* env, jclass cls, jobject obj, const char* fieldName, bool val)
+void setBoolValue(JNIEnv *env, jclass cls, jobject obj, const char *fieldName, bool val)
 {
 	jfieldID id = env->GetFieldID(cls, fieldName, "Z");
 	env->SetBooleanField(obj, id, val);
-}
-
-void getUShortValue(unsigned short *val, JNIEnv *env, jclass cls, jobject obj, const char *fieldName)
-{
-	jfieldID id = env->GetFieldID(cls, fieldName, "C");
-	*val = env->GetCharField(obj, id);
-}
-
-void setUShortValue(JNIEnv *env, jclass cls, jobject obj, const char *fieldName, unsigned short val)
-{
-	jfieldID id = env->GetFieldID(cls, fieldName, "C");
-	env->SetCharField(obj, id, val);
-	env->SetObjectField
 }
 
 
@@ -140,8 +162,8 @@ void getByteArray(unsigned char arr[], unsigned int arrLen, JNIEnv *env, jclass 
 	jbyteArray array = (jbyteArray) env->GetObjectField(obj, id);
 	if (array)
 	{
-		unsigned char *ary = (unsigned char*) env->GetByteArrayElements(array, 0);
-		unsigned int aryLen = env->GetArrayLength(array);
+		unsigned char *ary = (unsigned char *)env->GetByteArrayElements(array, 0);
+		int aryLen = env->GetArrayLength(array);
 		unsigned int minLen = arrLen < aryLen ? arrLen : aryLen;
 		for (int i = 0; i < minLen; i++) arr[i] = ary[i];
 		env->ReleaseByteArrayElements(array, (jbyte*)ary, 0);
@@ -209,15 +231,25 @@ void setLongArray(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, u
 
 //Object String
 
-void getStringField(char *pChar, JNIEnv *env, jclass cls, jobject obj, const char *fieldName){
+void getStringValue(char *pChar, JNIEnv *env, jclass cls, jobject obj, const char *fieldName){
 	jfieldID id = env->GetFieldID(cls, fieldName, "Ljava/lang/String;");
 	jstring jstr = (jstring)env->GetObjectField(obj,id);
 	pChar = (char*)env->GetStringUTFChars(jstr, 0);
 } 
 
-void setStringFiled(JNIEnv *env, jclass cls, jobject obj, const char *fieldName,const char *pChar){
+void setStringValue(JNIEnv *env, jclass cls, jobject obj, const char *fieldName,const char *pChar){
 	jfieldID id = env->GetFieldID(cls, fieldName, "Ljava/lang/String;");   
 	jstring jstr = env->NewStringUTF(pChar);
+	env->SetObjectField(obj, id, jstr);
+}
+
+void getStringValue(jstring &jstr, JNIEnv *env, jclass cls, jobject obj, const char *fieldName){
+	jfieldID id = env->GetFieldID(cls, fieldName, "Ljava/lang/String;");
+	jstr = (jstring)env->GetObjectField(obj,id);
+} 
+
+void setStringValue(JNIEnv *env, jclass cls, jobject obj, const char *fieldName, jstring jstr){
+	jfieldID id = env->GetFieldID(cls, fieldName, "Ljava/lang/String;");   
 	env->SetObjectField(obj, id, jstr);
 }
 

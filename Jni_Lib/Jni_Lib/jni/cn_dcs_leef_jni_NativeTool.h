@@ -34,7 +34,7 @@ JNIEXPORT jstring JNICALL Java_cn_dcs_leef_jni_NativeTool_stringTest
 /*
  * Class:     cn_dcs_leef_jni_NativeTool
  * Method:    classTest
- * Signature: (Lcn/dcs/leef/bean/UserJava;)Lcn/dcs/leef/bean/UserJava;
+ * Signature: (Lcn/dcs/leef/bean/User;)Lcn/dcs/leef/bean/User;
  */
 JNIEXPORT jobject JNICALL Java_cn_dcs_leef_jni_NativeTool_classTest
   (JNIEnv *, jclass, jobject);

@@ -93,18 +93,33 @@ JNIEXPORT jstring JNICALL Java_cn_dcs_leef_jni_NativeTool_stringTest
 		return pCharToJstring(env, result);
 }
 
+
 /*
  * Class:     cn_dcs_leef_jni_NativeTool
  * Method:    classTest
- * Signature: (Lcn/dcs/leef/bean/UserJava;)Lcn/dcs/leef/bean/UserJava;
+ * Signature: (Lcn/dcs/leef/bean/User;)Lcn/dcs/leef/bean/User;
  */
 JNIEXPORT jobject JNICALL Java_cn_dcs_leef_jni_NativeTool_classTest
 	(JNIEnv *env, jclass cls, jobject obj){
-	jclass m_cls = env->FindClass("cn/dcs/leef/bean/Java");
+
+	//class
+	jclass m_cls_Book = env->FindClass("cn/dcs/leef/bean/Book");
+	jclass m_cls_User = env->FindClass("cn/dcs/leef/bean/User");
+	jclass m_cls_List = env->FindClass("java/util/ArrayList"); 
+
+
+	//in
+	jstring userName = NULL; getStringValue(userName, env, cls, obj, "name");
+	long userId = 0; getIntValue(userId, env, cls, obj, "id");
+	
+
+	//out
+	jclass m_cls = env->FindClass("cn/dcs/leef/bean/");
 	jmethodID m_mid = env->GetMethodID(m_cls, "<init>", "()V");
 	jobject m_obj = env->NewObject(m_cls, m_mid);
 
 }
+
 
 /*
  * Class:     cn_dcs_leef_jni_NativeTool

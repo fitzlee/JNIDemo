@@ -142,7 +142,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="jni\BaxUtil.java" />
-    <None Include="jni\UserJava.java" />
+    <None Include="jni\Book.java" />
+    <None Include="jni\User.java" />
     <None Include="NativeTool.java" />
     <None Include="README.md" />
   </ItemGroup>
