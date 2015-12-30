@@ -33,12 +33,38 @@
 
 #jni中全局变量，变量维持，生命周期 
 
-#JNI_OnLoad()
+#JNI_OnLoad() JNI_OnUnload()  ->  [cache Ids](http://stackoverflow.com/questions/10617735/in-jni-how-do-i-cache-the-class-methodid-and-fieldids-per-ibms-performance-r)
+
+#java Static变量
 
 #内存泄露风险
+1. DeleteLocalRef  DeleteGlobalRef
+  * FindClass GetObjectField() GetObjectClass()  GetObjectArrayElement()  NewString/ NewStringUTF/NewObject/NewByteArray 
+		jclass ref= (env)->FindClass("java/lang/String");
+		env->DeleteLocalRef(ref); 
+	   
+		jclass ref = env->GetObjectClass(robj);
+		env->DeleteLocalRef(ref); 
+		
+		jobject ref= env->NewGlobalRef(customObj);
+		env->DeleteGlobalRef(customObj); 
+    
+2. ReleaseXXX
+  *Release is paired with Get  GetStringChars() GetStringUTFChars() GetByteArrayElements()  
+	
+		const char* input =(*env)->GetStringUTFChars(env,jinput, &isCopy);
+		(*env)->ReleaseStringUTFChars(env,jinput,input); 
+		
+		jbyte* array= (*env)->GetByteArrayElements(env,jarray,&isCopy);
+		(*env)->ReleaseByteArrayElements(env,jarray,array,0);
+		
+		
+#性能问题
 
-
+    
 #REF: (Thanks)
-http://blog.csdn.net/woshinia/article/details/25132353
-http://blog.csdn.net/jinhill/article/details/6918821
-http://blog.csdn.net/qiuxiaolong007/article/details/7554005
+[JNI性能和注意事项](http://www.ibm.com/developerworks/library/j-jni/)
+[类嵌套转换](http://blog.csdn.net/jinhill/article/details/6918821)
+[List方法1](http://blog.csdn.net/woshinia/article/details/25132353) [List方法2](http://blog.csdn.net/u_xtian/article/details/6033963) [List方法3](http://blog.csdn.net/qinjuning/article/details/7607214)
+[基本](http://blog.csdn.net/qiuxiaolong007/article/details/7554005)
+[内存泄漏](http://amazontzy.iteye.com/blog/1962367)

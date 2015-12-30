@@ -15,15 +15,6 @@
 
 #define LOGI printf
 
-//String Next 
-jstring pCharToJstring( JNIEnv *env, const char *pat);
-/**
- * NOTE: after using, free(ptr) 
- */
-char * jstringToPchar(JNIEnv *env, jstring jstr);
-void jstringToPchar(char *pOut, int &iLenOfOut, JNIEnv *env, jstring jstr);
-void pCharToJstring(jstring &jstr, char *pIn, int iLenOfIn, JNIEnv *env);
-
 //Object Basic
 void getDoubleValue(double &val, JNIEnv *env, jclass cls, jobject obj, const char* fieldName);
 void setDoubleValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, double val);
@@ -41,21 +32,6 @@ void getByteValue(char &val, JNIEnv *env, jclass cls, jobject obj, const char* f
 void setByteValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, char val);
 void getBoolValue(bool* val, JNIEnv* env, jclass cls, jobject obj,const char* fieldName);
 void setBoolValue(JNIEnv* env, jclass cls, jobject obj, const char* fieldName, bool val);
-
-//Object Array
-void getByteArray(unsigned char arr[], unsigned int arrLen, JNIEnv *env, jclass cls, jobject obj, const char* fieldName);
-void setByteArray(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, unsigned char *arr, int len);
-void getIntArray(unsigned int*& arr, unsigned int *arrCnt, JNIEnv *env, jclass cls, jobject obj, const char* fieldName);
-void setIntArray(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, unsigned int* val, int len);
-void setLongArray(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, unsigned long long* val, unsigned int len);
-
-//Object String
-void getStringValue(char *pChar, JNIEnv *env, jclass cls, jobject obj, const char *fieldName);
-void setStringValue(JNIEnv *env, jclass cls, jobject obj, const char *fieldName,const char *pChar);
-void setStringValue(JNIEnv *env, jclass cls, jobject obj, const char *fieldName, jstring jstr);
-void getStringValue(jstring &jstr, JNIEnv *env, jclass cls, jobject obj, const char *fieldName);
-
-//Object List
 
 
 #endif

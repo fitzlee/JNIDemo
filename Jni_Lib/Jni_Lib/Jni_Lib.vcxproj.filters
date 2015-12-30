@@ -28,6 +28,9 @@
     <ClCompile Include="jni\JniUtils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="jni\JniUtils_Del.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="jni\jni.h">
@@ -40,6 +43,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="jni\cn_dcs_leef_jni_NativeTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\JniUtil_Del.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
