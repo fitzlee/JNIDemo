@@ -1,17 +1,20 @@
-﻿生成启动时间为 2015/12/29 19:35:58。
-     1>项目“F:\private\jni_demo\Jni_Lib\Jni_Lib\Jni_Lib.vcxproj”在节点 2 上(Build 个目标)。
+﻿生成启动时间为 2016/1/4 16:44:22。
+     1>项目“D:\public\JNIDemo\Jni_Lib\Jni_Lib\Jni_Lib.vcxproj”在节点 2 上(Rebuild 个目标)。
      1>ClCompile:
-         F:\installed\vs2012\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D JNI_LIB_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt jni\cn_dcs_leef_jni_NativeTool.cpp jni\JniUtils.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D JNI_LIB_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt jni\cn_dcs_leef_jni_NativeTool.cpp jni\JniUtils.cpp jni\JniUtils_Del.cpp
+         JniUtils_Del.cpp
          JniUtils.cpp
          cn_dcs_leef_jni_NativeTool.cpp
-     1>jni\cn_dcs_leef_jni_NativeTool.cpp(20): error C2733: “printMyCharArray”: 不允许重载函数的第二个 C 链接
-                 jni\cn_dcs_leef_jni_NativeTool.cpp(13) : 参见“printMyCharArray”的声明
-     1>jni\cn_dcs_leef_jni_NativeTool.cpp(45): error C2059: 语法错误:“)”
-     1>jni\cn_dcs_leef_jni_NativeTool.cpp(67): warning C4267: “参数”: 从“size_t”转换到“jsize”，可能丢失数据
-     1>jni\cn_dcs_leef_jni_NativeTool.cpp(68): warning C4267: “参数”: 从“size_t”转换到“jsize”，可能丢失数据
          正在生成代码...
-     1>已完成生成项目“F:\private\jni_demo\Jni_Lib\Jni_Lib\Jni_Lib.vcxproj”(Build 个目标)的操作 - 失败。
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.dll" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.lib" /MACHINE:X64 /DLL x64\Debug\cn_dcs_leef_jni_NativeTool.obj
+         x64\Debug\JniUtils.obj
+         x64\Debug\JniUtils_Del.obj
+            正在创建库 D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.lib 和对象 D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.exp
+     1>cn_dcs_leef_jni_NativeTool.obj : error LNK2019: 无法解析的外部符号 "void __cdecl jstringToPchar(char *,int &,struct JNIEnv_ *,class _jstring *)" (?jstringToPchar@@YAXPEADAEAHPEAUJNIEnv_@@PEAV_jstring@@@Z)，该符号在函数 Java_cn_dcs_leef_jni_NativeTool_stringTest 中被引用
+     1>D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.dll : fatal error LNK1120: 1 个无法解析的外部命令
+     1>已完成生成项目“D:\public\JNIDemo\Jni_Lib\Jni_Lib\Jni_Lib.vcxproj”(Rebuild 个目标)的操作 - 失败。
 
 生成失败。
 
-已用时间 00:00:02.40
+已用时间 00:00:00.43

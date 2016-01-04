@@ -8,24 +8,24 @@
 
 void getDoubleValue(double &val, JNIEnv *env, jclass cls, jobject obj, const char *fieldName){
 	jfieldID id = env->GetFieldID(cls, fieldName, "D");
-	val = env->GetLongField(obj, id);
+	val = env->GetDoubleField(obj, id);
 }
 
 void setDoubleValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
 		double val) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "D");
-	env->SetLongField(obj, id, val);
+	env->SetDoubleField(obj, id, val);
 }
 
 void getFloatValue(float &val, JNIEnv *env, jclass cls, jobject obj, const char *fieldName){
 	jfieldID id = env->GetFieldID(cls, fieldName, "F");
-	val = env->GetLongField(obj, id);
+	val = env->GetFloatField(obj, id);
 }
 
 void setFloatValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
 		float val) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "F");
-	env->SetLongField(obj, id, val);
+	env->SetFloatField(obj, id, val);
 }
 
 void getLongValue(long long &val, JNIEnv *env, jclass cls, jobject obj,
@@ -70,13 +70,13 @@ void getCharValue(unsigned short &val, JNIEnv *env, jclass cls, jobject obj,
 		const char* fieldName)
 {
 	jfieldID id=env->GetFieldID(cls,fieldName,"C");
-	val = env->GetShortField(obj,id);
+	val = env->GetCharField(obj,id);
 }
 
 void setCharValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
 		unsigned short val) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "C");
-	env->SetShortField(obj, id, val);
+	env->SetCharField(obj, id, val);
 }
 
 
@@ -91,10 +91,11 @@ void setByteValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, c
 	env->SetByteField(obj, id, val);
 }
 
-void getBoolValue(bool *val, JNIEnv *env, jclass cls, jobject obj,const char *fieldName)
+void getBoolValue(bool &flag, JNIEnv *env, jclass cls, jobject obj,const char *fieldName)
 {
 	jfieldID id = env->GetFieldID(cls, fieldName, "Z");
-	*val = env->GetBooleanField(obj, id);
+	int val = env->GetBooleanField(obj, id);
+	flag = (val==0?false:true);
 }
 
 void setBoolValue(JNIEnv *env, jclass cls, jobject obj, const char *fieldName, bool val)

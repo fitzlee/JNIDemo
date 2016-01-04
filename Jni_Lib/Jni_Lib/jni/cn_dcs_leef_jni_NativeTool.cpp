@@ -1,6 +1,8 @@
 #include "jni.h"
+#include "stdio.h"
 #include "string.h"
 #include "JniUtil.h"
+#include "JniUtil_Del.h"
 /* Source for class cn_dcs_leef_jni_NativeTool */
 
 
@@ -11,18 +13,19 @@
 extern "C" {
 #endif
 
-void printMyCharArray(unsigned char *k,int len){
+void printMyCharArray(unsigned char *k, int len){
 	for(int i=0;i<len;i++){
 		printf("%02X",k[i]);
 	}
 	printf("\n");
 }
 
-void printMyCharArray(const char *k,int len){
-	for(int i=0;i<len;i++){
-		printf("%02X",k[i]);
-	}
-	printf("\n");
+
+void printJbyteArray(JNIEnv *env, jbyteArray array){
+	unsigned char *cByte = (unsigned char *)env->GetByteArrayElements(array, NULL);
+	int Len = env->GetArrayLength(array);
+	printMyCharArray(cByte, Len);
+	env->ReleaseByteArrayElements(array, (jbyte *)cByte, 0);
 }
 
 /*
@@ -32,7 +35,7 @@ void printMyCharArray(const char *k,int len){
  */
 JNIEXPORT jstring JNICALL Java_cn_dcs_leef_jni_NativeTool_basicTest
 	(JNIEnv *env, jclass cls, jboolean jbo, jbyte jby, jchar jch, jshort jsh, jint ji, jlong jl, jfloat jf, jdouble jd){
-	bool cBool = jbo;
+	bool cBool = jbo==0?false:true;
 	unsigned char cUChar = jby; 
 	char cChar = jby;
 	unsigned short cUShort = jch;
@@ -43,10 +46,10 @@ JNIEXPORT jstring JNICALL Java_cn_dcs_leef_jni_NativeTool_basicTest
 	double cDouble = jd;
 	
 	int Len=0;
-	char result[1024];
-	sprintf(result,"boolean->bool:%d,byte->uchar:%02x,byte->char:%02x,char->ushort:%04x,short->short:%04x,int->long:%08x,long->llong:%016x,float->float:%f,double->double:%e",
+	char result[1024]; memset(result,0,1024);
+	sprintf_s(result,"boolean->bool:%d,byte->uchar:%02x,byte->char:%02x,char->ushort:%04x,short->short:%04x,int->long:%08x,long->llong:%016x,float->float:%f,double->double:%e",
 		 cBool, cUChar, cChar, cUShort, cShort, cLong, cLLong, cFloat, cDouble);
-	jstring str = pCharToJstring(env,result);
+	jstring str = env->NewStringUTF(result);
 	return str;
 }
 
@@ -57,19 +60,10 @@ JNIEXPORT jstring JNICALL Java_cn_dcs_leef_jni_NativeTool_basicTest
  */
 JNIEXPORT jintArray JNICALL Java_cn_dcs_leef_jni_NativeTool_arrayTest
 	(JNIEnv *env, jclass cls, jbyteArray jbyArray){
-		char *cByte2 = (char *)env->GetByteArrayElements(jbyArray, NULL);
-		int Len = env->GetArrayLength(jbyArray);
-		unsigned char *cByte = (unsigned char *)env->GetByteArrayElements(jbyArray, NULL);
-		printMyCharArray(cByte, Len);
-		printMyCharArray(cByte2, Len);
-		
-		env->ReleaseByteArrayElements(jbyArray, (jbyte *)cByte, NULL);
-		env->ReleaseByteArrayElements(jbyArray, (jbyte *)cByte2, NULL);
+		//in 
+		printJbyteArray(env, jbyArray);
 
-		char *msg = "from Native arrayTest";
-		jbyteArray bytes = env->NewByteArray(strlen(msg));
-		env->SetByteArrayRegion(bytes, 0, strlen(msg), (jbyte *)msg);
-
+		//out
 		long ret[2]={0x1,0x2};
 		jintArray ints = env->NewIntArray(2);
 		env->SetIntArrayRegion(ints, 0, 2, (jint *)ret);
@@ -83,14 +77,25 @@ JNIEXPORT jintArray JNICALL Java_cn_dcs_leef_jni_NativeTool_arrayTest
  */
 JNIEXPORT jstring JNICALL Java_cn_dcs_leef_jni_NativeTool_stringTest
 	(JNIEnv *env, jclass cls, jstring jstr){
+		char *pChar = NULL; int iLenOfChar=0;
+		jstringToPchar(pChar, iLenOfChar, env, jstr);
+		printf("%s\n", pChar);
+		delete(pChar);
+
+		char *result = "from native stringTest";
+		jstring str = env->NewStringUTF(result);// pCharToJstring(env,result);
+
+		/*
 		const char *chars = env->GetStringUTFChars(jstr, 0);
 		int charsLen = env->GetStringUTFLength(jstr);
-		printf("%s\n",chars);
-		printMyCharArray(chars, charsLen);
+		printf("%s\n", chars);
 		env->ReleaseStringUTFChars(jstr, chars); 
 
 		char *result = "from native stringTest";
-		return pCharToJstring(env, result);
+		jstring str = env->NewStringUTF(result);
+		*/
+
+		return str;
 }
 
 
@@ -109,78 +114,107 @@ JNIEXPORT jobject JNICALL Java_cn_dcs_leef_jni_NativeTool_classTest
 	//class
 	jclass cls_Book = env->FindClass("cn/dcs/leef/bean/Book");
 	jclass cls_User = env->FindClass("cn/dcs/leef/bean/User");
-	//jclass m_cls_List = env->FindClass("java/util/ArrayList"); 
+	jclass cls_ArrayList = env->FindClass("java/util/ArrayList");  
+	
 
-
-	//in
+	//id & method
+	jmethodID construct_User = env->GetMethodID(cls_User, "<init>", "()V");
 	jfieldID id_userName = env->GetFieldID(cls_User, "name", "Ljava/lang/String;");
+	jfieldID id_userId = env->GetFieldID(cls_User, "id", "I");
+	jfieldID id_userPubKey = env->GetFieldID(cls_User, "pubKey", "[B");
+	jfieldID id_userBooks = env->GetFieldID(cls_User, "books", "Ljava/lang/Object;");
+	
+	jmethodID construct_Book = env->GetMethodID(cls_Book,"<init>","()V");  
+	jfieldID id_bookTitle = env->GetFieldID(cls_Book, "title", "Ljava/lang/String;");
+	jfieldID id_bookId = env->GetFieldID(cls_Book, "id", "I");
+	
+	jmethodID construct_List = env->GetMethodID(cls_ArrayList,"<init>","()V");  
+	jmethodID arrayList_add = env->GetMethodID(cls_ArrayList,"add","(Ljava/lang/Object;)Z"); 
+	jmethodID arraylist_get = env->GetMethodID(cls_ArrayList, "get", "(I)Ljava/lang/Object;");  
+	jmethodID arraylist_size = env->GetMethodID(cls_ArrayList, "size", "()I");  
+
+	//in  getIntField getObjectField
 	jstring userName = (jstring)env->GetObjectField(obj, id_userName);
 	long userId = 0; getIntValue(userId, env, cls_User, obj, "id");
-	jfieldID id_userPubKey = env->GetFieldID(cls_User, "pubKey", "[B");
 	jbyteArray userPubKey = (jbyteArray) env->GetObjectField(obj, id_userPubKey);
-	jfieldID id_userBooks = env->GetFieldID(cls_User, "books", "Ljava/lang/Object;");
-	jobject userBooks = env->GetObjectField(obj, id_userBooks);
-
-	jclass cls_arraylist = env->GetObjectClass(userBooks);  // ?==ArrayList  ?==ArrayList<Book>
-	jmethodID arraylist_get = env->GetMethodID(cls_arraylist, "get", "(I)Ljava/lang/Object;");  
-	jmethodID arraylist_size = env->GetMethodID(cls_arraylist, "size", "()I");  
+	jobject userBooks = env->GetObjectField(obj, id_userBooks);											
 	jint len = env->CallIntMethod(userBooks, arraylist_size);  
-	for(int i=0;i<len;i++){  
+	for(int i=0; i < len; i++){  
 		jobject book = env->CallObjectMethod(userBooks, arraylist_get, i); 
-		jfieldID id_bookTitle = env->GetFieldID(cls_Book, "title", "Ljava/lang/String;");
 		jstring bookTitle = (jstring)env->GetObjectField(book, id_bookTitle);
-		jfieldID id_bookId = env->GetFieldID(cls_Book, "id", "I");
 		jint bookId = env->GetIntField(book, id_bookId);
+		//make your own copy  http://stackoverflow.com/questions/17519116/how-to-release-jstring-in-a-loop-correctly
+		env->DeleteLocalRef(book);
+		env->DeleteLocalRef(bookTitle);
 	}
 
-	//out
-	jmethodID m_userInit = env->GetMethodID(cls_User, "<init>", "()V");
-	jobject userNew = env->NewObject(cls_User, m_userInit);
-	jmethodID userMethod = env->GetMethodID(cls_User,"<init>","()V");  
-	jfieldID mId = env->GetFieldID(userClass,"id","J");  
-        jfieldID mUserName = env->GetFieldID(userClass,"userName","Ljava/lang/String;");  
-        jfieldID mIsMan = env->GetFieldID(userClass,"isMan","Z");  
-        jfieldID mAge = env->GetFieldID(userClass,"age","I");  
-        jobject userObject = env->NewObject(userClass,userMethod);  
-        env->SetObjectField(userObject,mUserName,name);  
-        env->SetLongField(userObject,mId,1001);  
-        env->SetBooleanField(userObject,mIsMan,1);  
-        env->SetIntField(userObject,mAge,21);  
+	//do something
+
+	//out setIntField setObjectField
+	jobject userNew = env->NewObject(cls_User, construct_User);
+	jstring userNameNew = env->NewStringUTF("native UserName");  env->SetObjectField(userNew, id_userName, userNameNew);
+	setIntValue(env, cls, userNew, "id", 100031);
+	unsigned char pRandomUser[32]={0x39,0x45,0x20,0x8F,0x7B,0x21,0x44,0xB1,0x3F,0x36,0xE3,0x8A,0xC6,0xD3,0x9F,0x95,0x88,0x93,0x93,0x69,0x28,0x60,0xB5,0x1A,0x42,0xFB,0x81,0xEF,0x4D,0xF7,0xC5,0xB8};
+	jbyteArray userPubKeyNew = env->NewByteArray(32); 
+	env->GetByteArrayRegion(userPubKeyNew, 0, 32, (jbyte *)pRandomUser);
+	env->SetObjectField(userNew, id_userPubKey,userPubKey);
+    jobject userBookList = env->NewObject(cls_ArrayList,construct_List,"");  
+	for(int i=0; i<2; i++){
+		 jobject obj_book = env->NewObject(cls_Book, construct_Book); 
+		 setIntValue(env, cls_Book, obj_book, "id", 10003100+i);
+		 jstring str = env->NewStringUTF("book "+i);
+		 env->SetObjectField(obj_book, id_bookTitle, str);
+		 env->CallObjectMethod(userBookList,arrayList_add,obj_book); 
+		 env->DeleteLocalRef(str);
+	}
+	env->SetObjectField(userNew, id_userBooks, userBookList);
 
 	//delete&release
+	env->DeleteLocalRef(cls_User);
+	env->DeleteLocalRef(cls_Book);
+	env->DeleteLocalRef(cls_ArrayList);
+	env->DeleteLocalRef(userName);
+	env->DeleteLocalRef(userPubKey);
+	env->DeleteLocalRef(userBooks);
 
+	env->DeleteLocalRef(userNameNew);
+	env->DeleteLocalRef(userPubKey);
 
 	//return
+	return userNew;
 
 }
 
 
+/*
+ * Class:     cn_dcs_leef_jni_NativeTool
+ * Method:    staticMethodTest
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_cn_dcs_leef_jni_NativeTool_staticMethodTest
+	(JNIEnv *env, jclass cls){
+		jclass cls_User = env->FindClass("cn/dcs/leef/bean/User");
+		jmethodID m_GetCount = env->GetStaticMethodID(cls_User, "getCount", "(I)I");
+		int count = env->CallStaticIntMethod(cls_User,m_GetCount);
+		printf("native count=\n"+count);
+}
 
 /*
  * Class:     cn_dcs_leef_jni_NativeTool
- * Method:    methodTest
- * Signature: (I)I
+ * Method:    objectMethodTest
+ * Signature: (Lcn/dcs/leef/bean/User;)V
  */
-JNIEXPORT jint JNICALL Java_cn_dcs_leef_jni_NativeTool_methodTest
-	(JNIEnv *, jclass, jint){
+JNIEXPORT void JNICALL Java_cn_dcs_leef_jni_NativeTool_objectMethodTest
+	(JNIEnv *env, jclass cls, jobject obj){
+	//in
+	jclass cls_User = env->FindClass("cn/dcs/leef/bean/User");
+	jmethodID m_GetId = env->GetMethodID(cls_User, "getId", "()I");
+	int id = env->CallIntMethod(obj, m_GetId);
+	printf("native getId=\n"+id);
 
-				jobject obj_user = env->CallObjectMethod(userList,arraylist_get,i);  
-                jclass cls_user = env->GetObjectClass(obj_user);  
-                jmethodID user_getId = env->GetMethodID(cls_user,"getId","()J");  
-                jmethodID user_getUserName = env->GetMethodID(cls_user,"getUserName","()Ljava/lang/String;");  
-                jmethodID user_isMan = env->GetMethodID(cls_user,"isMan","()Z");  
-                jmethodID user_getAge = env->GetMethodID(cls_user,"getAge","()I");  
-                jstring name = (jstring)env->CallObjectMethod(obj_user,user_getUserName);  
-                jboolean b = true;  
-                const char *namePtr = env->GetStringUTFChars(name,&b);  
-                jlong id = env->CallLongMethod(obj_user,user_getId);  
-                jboolean sex = env->CallBooleanMethod(obj_user,user_isMan);  
-                jint age = env->CallIntMethod(obj_user,user_getAge);  
-                printf("Id:%d; ",id);  
-                printf("Name:%s; ",namePtr);  
-                printf("isMan? %d; ",sex);  
-                printf("Age:%d /n ",age);  
-	
+	//set obj
+	jfieldID id_userId = env->GetFieldID(cls_User, "id", "I");
+	env->SetIntField(obj, id_userId, id+10);
 }
 
 #ifdef __cplusplus

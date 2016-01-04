@@ -42,10 +42,10 @@
     <ClInclude Include="jni\JniUtil.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jni\cn_dcs_leef_jni_NativeTool.h">
+    <ClInclude Include="jni\JniUtil_Del.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jni\JniUtil_Del.h">
+    <ClInclude Include="jni\cn_dcs_leef_jni_NativeTool.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,8 +1,8 @@
 //Object Delete & Release Too Much ...  Just For Test & Learn 
 #include "jni.h"
 
-#ifndef JNIUTIL_H
-#define JNIUTIL_H
+#ifndef JNIUTIL_DEL_H
+#define JNIUTIL_DEL_H
 
 //#define ARM
 #if defined(ARM) 
@@ -19,9 +19,9 @@
 //String Next 
 jstring pCharToJstring( JNIEnv *env, const char *pat);
 //NOTE: after using, free(ptr) 
-char * jstringToPchar(JNIEnv *env, jstring jstr);
 void jstringToPchar(char *pOut, int &iLenOfOut, JNIEnv *env, jstring jstr);
-void pCharToJstring(jstring &jstr, char *pIn, int iLenOfIn, JNIEnv *env);
+jstring pCharToUTF8Jstring(JNIEnv *env, char *pIn);
+void jstringUTF8ToPchar(char *pOut, int &iLenOfOut, JNIEnv *env, jstring jstr);
 
 
 //Object Array
