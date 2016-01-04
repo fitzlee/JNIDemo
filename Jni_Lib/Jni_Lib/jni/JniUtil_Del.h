@@ -19,9 +19,9 @@
 //String Next 
 jstring pCharToJstring( JNIEnv *env, const char *pat);
 //NOTE: after using, free(ptr) 
-void jstringToPchar(char *pOut, int &iLenOfOut, JNIEnv *env, jstring jstr);
+void jstringToPchar(char *&pOut, int &iLenOfOut, JNIEnv *env, jstring jstr);
 jstring pCharToUTF8Jstring(JNIEnv *env, char *pIn);
-void jstringUTF8ToPchar(char *pOut, int &iLenOfOut, JNIEnv *env, jstring jstr);
+void jstringUTF8ToPchar(char *&pOut, int &iLenOfOut, JNIEnv *env, jstring jstr);
 
 
 //Object Array

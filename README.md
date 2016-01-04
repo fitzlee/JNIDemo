@@ -22,12 +22,16 @@
 		const char *user = env->GetStringUTFChars(userName, 0);
 		int userLen = env->GetStringUTFLength(userName);
 		env->ReleaseStringUTFChars(userName, user); 
+		
+		JniUtil_Del.cpp中有复杂的gbk转换，可以参考
 * 字符编码
 
 
-#c++调用java类
+#c++调用java类方法和静态方法
+只要找到对应的methodID,直接对应就行，需要注意是Object Method还是Static Method
 
 #Java类中有嵌套类? c++怎么返回该类?
+参考jstring， 换成其他Object即可，如Lcn/dcs/leef/bean/book
 
 #多模块调用 sm2.so sm3.so
 

@@ -26,8 +26,10 @@
 
 
 #c++调用java类
+只要找到对应的methodID,直接对应就行，需要注意是Object Method还是Static Method
 
 #Java类中有嵌套类? c++怎么返回该类?
+参考jstring， 换成其他Object即可，如Lcn/dcs/leef/bean/book
 
 #多模块调用 sm2.so sm3.so
 

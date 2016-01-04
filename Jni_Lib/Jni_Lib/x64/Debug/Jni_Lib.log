@@ -1,20 +1,21 @@
-﻿生成启动时间为 2016/1/4 16:44:22。
-     1>项目“D:\public\JNIDemo\Jni_Lib\Jni_Lib\Jni_Lib.vcxproj”在节点 2 上(Rebuild 个目标)。
+﻿生成启动时间为 2016/1/4 22:45:52。
+     1>项目“F:\public\JNIDemo\Jni_Lib\Jni_Lib\Jni_Lib.vcxproj”在节点 2 上(Rebuild 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D JNI_LIB_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt jni\cn_dcs_leef_jni_NativeTool.cpp jni\JniUtils.cpp jni\JniUtils_Del.cpp
+         F:\installed\vs2012\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D JNI_LIB_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt jni\cn_dcs_leef_jni_NativeTool.cpp jni\JniUtils.cpp jni\JniUtils_Del.cpp
          JniUtils_Del.cpp
          JniUtils.cpp
          cn_dcs_leef_jni_NativeTool.cpp
+     1>jni\cn_dcs_leef_jni_NativeTool.cpp(169): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 F:\installed\vs2012\VC\include\stdio.h(357) : 参见“sprintf”的声明
          正在生成代码...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.dll" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.lib" /MACHINE:X64 /DLL x64\Debug\cn_dcs_leef_jni_NativeTool.obj
+         F:\installed\vs2012\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"F:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.dll" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:F:\installed\vs2012\VC\Include\Manifest\dpiaware.manifest /DEBUG /PDB:"F:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.lib" /MACHINE:X64 /DLL x64\Debug\cn_dcs_leef_jni_NativeTool.obj
          x64\Debug\JniUtils.obj
          x64\Debug\JniUtils_Del.obj
-            正在创建库 D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.lib 和对象 D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.exp
-     1>cn_dcs_leef_jni_NativeTool.obj : error LNK2019: 无法解析的外部符号 "void __cdecl jstringToPchar(char *,int &,struct JNIEnv_ *,class _jstring *)" (?jstringToPchar@@YAXPEADAEAHPEAUJNIEnv_@@PEAV_jstring@@@Z)，该符号在函数 Java_cn_dcs_leef_jni_NativeTool_stringTest 中被引用
-     1>D:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.dll : fatal error LNK1120: 1 个无法解析的外部命令
-     1>已完成生成项目“D:\public\JNIDemo\Jni_Lib\Jni_Lib\Jni_Lib.vcxproj”(Rebuild 个目标)的操作 - 失败。
+            正在创建库 F:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.lib 和对象 F:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.exp
+         Jni_Lib.vcxproj -> F:\public\JNIDemo\Jni_Lib\x64\Debug\Jni_Lib.dll
+     1>已完成生成项目“F:\public\JNIDemo\Jni_Lib\Jni_Lib\Jni_Lib.vcxproj”(Rebuild 个目标)的操作。
 
-生成失败。
+生成成功。
 
-已用时间 00:00:00.43
+已用时间 00:00:01.11

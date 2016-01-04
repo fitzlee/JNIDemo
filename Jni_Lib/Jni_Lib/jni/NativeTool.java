@@ -12,6 +12,6 @@ public class NativeTool {
 	public static native int[] arrayTest(byte[] byteArray);
 	public static native String stringTest(String str);
 	public static native User classTest(User user); //return new User
-	public static native void staticTest();  //C++ -> user getId calc
+	public static native void staticMethodTest();  //C++ -> user getId calc
 	public static native void objectMethodTest(User user); //C++ -> user getId calc
 }

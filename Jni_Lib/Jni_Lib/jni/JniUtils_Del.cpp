@@ -68,7 +68,7 @@ jstring pCharToJstring(JNIEnv *env, const char *pat)
 /**
  * NOTE: after using, delete(pOut) 
  */
-void jstringToPchar(char *pOut, int &iLenOfOut, JNIEnv *env, jstring jstr)  
+void jstringToPchar(char *&pOut, int &iLenOfOut, JNIEnv *env, jstring jstr)  
 {  
 	jclass clsstring = env->FindClass("java/lang/String");   
 	jstring strencode = env->NewStringUTF("GB2312");  
@@ -99,7 +99,7 @@ jstring pCharToUTF8Jstring(JNIEnv *env, char *pIn){
 /**
  * NOTE: after using, env->ReleaseStringUTFChars(jstr,pOut);
  */
-void jstringUTF8ToPchar(char *pOut, int &iLenOfOut, JNIEnv *env, jstring jstr){
+void jstringUTF8ToPchar(char *&pOut, int &iLenOfOut, JNIEnv *env, jstring jstr){
 	pOut =(char *)env->GetStringUTFChars(jstr,0);
 	iLenOfOut = env->GetStringUTFLength(jstr);
 }

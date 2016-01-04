@@ -41,10 +41,10 @@ JNIEXPORT jobject JNICALL Java_cn_dcs_leef_jni_NativeTool_classTest
 
 /*
  * Class:     cn_dcs_leef_jni_NativeTool
- * Method:    staticMethodTest
+ * Method:    staticTest
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_cn_dcs_leef_jni_NativeTool_staticMethodTest
+JNIEXPORT void JNICALL Java_cn_dcs_leef_jni_NativeTool_staticTest
   (JNIEnv *, jclass);
 
 /*

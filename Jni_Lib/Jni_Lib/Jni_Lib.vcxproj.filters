@@ -15,11 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.md" />
-    <None Include="NativeTool.java" />
-    <None Include="jni\BaxUtil.java" />
-    <None Include="jni\Book.java" />
-    <None Include="jni\User.java" />
+    <None Include="jni\Book.java">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="jni\NativeTool.java">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="jni\User.java">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="jni\cn_dcs_leef_jni_NativeTool.cpp">
@@ -46,6 +50,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="jni\cn_dcs_leef_jni_NativeTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\JniUtil_IO.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

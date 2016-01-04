@@ -30,7 +30,7 @@ void getCharValue(unsigned short &val, JNIEnv *env, jclass cls, jobject obj, con
 void setCharValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, unsigned short val);
 void getByteValue(char &val, JNIEnv *env, jclass cls, jobject obj, const char* fieldName);
 void setByteValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName, char val);
-void getBoolValue(bool* val, JNIEnv* env, jclass cls, jobject obj,const char* fieldName);
+void getBoolValue(bool &val, JNIEnv* env, jclass cls, jobject obj,const char* fieldName);
 void setBoolValue(JNIEnv* env, jclass cls, jobject obj, const char* fieldName, bool val);
 
 

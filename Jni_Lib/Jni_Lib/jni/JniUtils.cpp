@@ -49,7 +49,7 @@ void getIntValue(long &val, JNIEnv *env, jclass cls, jobject obj,
 void setIntValue(JNIEnv *env, jclass cls, jobject obj, const char* fieldName,
 		long val) {
 	jfieldID id = env->GetFieldID(cls, fieldName, "I");
-	env->SetIntField(obj, id, val);
+	env->SetIntField(obj, id, (jint)val);
 }
 
 void getShortValue(short &val, JNIEnv *env, jclass cls, jobject obj,

@@ -25,4 +25,13 @@ public class User {
 	public int calc(int i){
 		return i+2;
 	}
+	
+	@Override
+	public String toString(){
+		String str = "id="+id+",name="+name+",";
+		for(Book item:books){
+			str+= "bookId="+item.id+",booktitle="+item.title+","; 
+		}
+		return str;
+	}
 }
