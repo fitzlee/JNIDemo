@@ -1,0 +1,68 @@
+apply plugin: 'com.android.model.library'
+
+model {
+    android {
+        compileSdkVersion = 23
+        buildToolsVersion = "23.0.2"
+
+        defaultConfig.with {
+            applicationId = "cn.dcs.leef.Jni_Lib"
+            minSdkVersion.apiLevel  = 19  // Unable to load class com.android.build.gradle.managed.ProductFlavor_Impl
+            targetSdkVersion.apiLevel = 23
+            versionCode = 1
+            versionName = "1.0"
+        }
+    }
+
+    compileOptions.with {
+        sourceCompatibility = JavaVersion.VERSION_1_7
+        targetCompatibility = JavaVersion.VERSION_1_7
+    }
+
+    android.buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles += file('proguard-rules.pro')
+        }
+    }
+
+    android.ndk {
+        moduleName = "Jni_Lib"
+        cppFlags += "-std=c++11"
+        ldLibs += ["android", "log"]
+        stl = "gnustl_shared"
+    }
+
+    android.productFlavors {
+        create("arm") {
+            ndk.abiFilters += "armeabi"
+        }
+        create("arm7") {
+            ndk.abiFilters += "armeabi-v7a"
+        }
+        create("arm8") {
+            ndk.abiFilters += "arm64-v8a"
+        }
+        create("x86") {
+            ndk.abiFilters += "x86"
+        }
+        create("x86-64") {
+            ndk.abiFilters += "x86_64"
+        }
+        create("mips") {
+            ndk.abiFilters += "mips"
+        }
+        create("mips-64") {
+            ndk.abiFilters += "mips64"
+        }
+        // To include all cpu architectures, leaves abiFilters empty
+        create("all")
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+}
